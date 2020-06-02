@@ -72,6 +72,45 @@ final class WelcomeView: UIView {
         return stackView
     }()
     
+    let footerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Ou via redes sociais"
+        label.textAlignment = .center
+        label.font = .body
+        label.textColor = .body
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let socialStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.alignment = .center
+        stackView.spacing = Margin.horizontalSmall
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    let facebookButton: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(#imageLiteral(resourceName: "facebook"), for: .normal)
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 20
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    let googleButton: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(#imageLiteral(resourceName: "google"), for: .normal)
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 20
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     // MARK: Constructors
     init(delegate: WelcomeViewDelegate) {
         self.delegate = delegate
@@ -90,6 +129,10 @@ final class WelcomeView: UIView {
             delegate?.loginButtonTapped()
         case signUpButton:
             delegate?.signUpButtonTapped()
+        case facebookButton:
+            delegate?.facebookButtonTapped()
+        case googleButton:
+            delegate?.googleButtonTapped()
         default:
             break
         }
@@ -105,6 +148,10 @@ extension WelcomeView: CodeView {
         addSubview(buttonsStackView)
         buttonsStackView.addArrangedSubview(loginButton)
         buttonsStackView.addArrangedSubview(signUpButton)
+        addSubview(footerLabel)
+        addSubview(socialStackView)
+        socialStackView.addArrangedSubview(facebookButton)
+        socialStackView.addArrangedSubview(googleButton)
     }
     
     func setupContraints() {
@@ -158,11 +205,26 @@ extension WelcomeView: CodeView {
         loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         loginButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
         signUpButton.heightAnchor.constraint(equalTo: loginButton.heightAnchor, multiplier: 1).isActive = true
+        
+        //Botões Sociais
+        facebookButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        facebookButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        googleButton.heightAnchor.constraint(equalTo: facebookButton.heightAnchor, multiplier: 1).isActive = true
+        
+        //Social StackView
+        socialStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -Margin.verticalNormal).isActive = true
+        socialStackView.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
+        
+        //Footer Label
+        footerLabel.bottomAnchor.constraint(equalTo: socialStackView.topAnchor, constant: -Margin.verticalNormal).isActive = true
+        footerLabel.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
     }
     
     func setupExtraConfigurations() {
         backgroundColor = .view
         loginButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         signUpButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        facebookButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        googleButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
 }

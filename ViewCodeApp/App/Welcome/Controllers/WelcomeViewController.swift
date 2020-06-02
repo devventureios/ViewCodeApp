@@ -17,6 +17,7 @@ final class WelcomeViewController: UIViewController {
     // MARK: - Super Methods
     override func loadView() {
         view = WelcomeView(delegate: self)
+        title = "Welcome"
     }
     
     // MARK: - IBActions
@@ -28,6 +29,13 @@ final class WelcomeViewController: UIViewController {
 extension WelcomeViewController: WelcomeViewDelegate {
     func loginButtonTapped() {
         print("loginButtonTapped")
+        
+        let homeViewController = HomeViewController()
+        homeViewController.loadView()
+        
+        //navigationController?.show(homeViewController, sender: nil)
+        present(homeViewController, animated: true, completion: nil)
+        
     }
     
     func signUpButtonTapped() {

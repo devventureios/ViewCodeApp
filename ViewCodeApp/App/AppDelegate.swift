@@ -19,12 +19,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let welcomeViewController = WelcomeViewController()
+        
+        //Se quiser utilizar uma NavigationController
+        //let navigationController = UINavigationController()
+        //navigationController.viewControllers = [welcomeViewController]
+        //window?.rootViewController = navigationController
+        
         window?.rootViewController = welcomeViewController
         window?.makeKeyAndVisible()
         
         return true
     }
-
-
 }
 
